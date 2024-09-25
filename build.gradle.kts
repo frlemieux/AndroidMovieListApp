@@ -9,6 +9,6 @@ plugins {
 
 buildscript {
     dependencies {
-        classpath(libs.secrets.gradle.plugin1)
+        classpath(libs.secrets.gradle.plugin)
     }
 }
