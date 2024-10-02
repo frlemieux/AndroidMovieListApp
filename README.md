@@ -21,3 +21,6 @@ https://github.com/google/secrets-gradle-plugin<br>
 3. Add in BuildFeatures bracket  { BuildConfig = true } // below compose = true
 4. Add your variable in your local.properties file
 5. You can use anywhere in your module BuildConfig.apiKey
+   
+
+<img src="screenshots%2FlocalProperties.png" width="900" />
