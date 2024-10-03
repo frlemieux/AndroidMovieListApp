@@ -13,7 +13,7 @@ interface MovieDao {
     @Query(
         "SELECT * FROM movies",
     )
-    fun repoEntityPagingSource(): PagingSource<Int, MovieEntity>
+    fun pagingSource(): PagingSource<Int, MovieEntity>
 
     @Query("SELECT `index` FROM `movies` ORDER BY `index` DESC LIMIT 1")
     suspend fun lastIndex(): Int?

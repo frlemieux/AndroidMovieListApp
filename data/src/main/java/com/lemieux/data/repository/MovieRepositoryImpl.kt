@@ -8,7 +8,6 @@ import androidx.paging.map
 import com.lemieux.data.local.MovieEntity
 import com.lemieux.data.local.TmbdDatabase
 import com.lemieux.data.remote.MovieApi
-import com.lemieux.data.remote.MoviePagingSource
 import com.lemieux.data.remote.MovieRemoteMediator
 import com.lemieux.data.remote.model.MovieDto
 import com.lemieux.data.remote.model.detail.toDetail
@@ -33,7 +32,7 @@ class MovieRepositoryImpl @Inject constructor(
         return Pager(
             config = PagingConfig(pageSize = 20),
             remoteMediator = MovieRemoteMediator(api, db),
-            pagingSourceFactory = { db.movieDao.repoEntityPagingSource() }
+            pagingSourceFactory = { db.movieDao.pagingSource() }
         ).flow.map { pagingData ->
             pagingData.map { it.toMovie() }
         }.flowOn(Dispatchers.Default)
