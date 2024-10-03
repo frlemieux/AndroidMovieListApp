@@ -64,10 +64,12 @@ fun MovieListScreen(
                             contentPadding = PaddingValues(vertical = 16.dp, horizontal = 24.dp),
                         ) {
                             items(count = movies.itemCount, key = { index -> index}) { index ->
-                                MovieItem(movie = movies[index]!!,
-                                    modifier.clickable {
-                                        onClickItem(movies[index]!!.id)
-                                    })
+                                movies[index]?.let {
+                                    MovieItem(movie = it,
+                                        modifier.clickable {
+                                            onClickItem(movies[index]!!.id)
+                                        })
+                                }
                             }
                             item {
                                 if (movies.loadState.append is LoadState.Loading) {

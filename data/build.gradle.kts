@@ -48,6 +48,12 @@ dependencies {
 
     implementation(libs.paging.runtime)
 
+    // Room
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+    implementation(libs.room.paging)
+
+
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     ksp(libs.hilt.ext.compiler)
