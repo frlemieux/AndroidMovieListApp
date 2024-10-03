@@ -21,4 +21,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "Movie List"
 include(":app")
- 
+include(":data")
+include(":domain")
+include("features:feed")
+include("features:detail")
