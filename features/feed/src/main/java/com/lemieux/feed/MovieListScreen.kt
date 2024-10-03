@@ -118,10 +118,14 @@ fun EmptyContent(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = modifier
+        modifier = modifier.padding(horizontal = 16.dp)
     ) {
-        Text("Error: ${e.error.localizedMessage}", color = Color.Red)
-        Button(onClick = { onRetry() }) {
+        Text("The service is unavailable. \nRetry later please",
+            textAlign = TextAlign.Center,
+            color = Color.Red
+        )
+        Button(onClick = { onRetry() },
+            modifier = Modifier.padding(top = 8.dp)) {
             Text("Retry")
         }
     }
