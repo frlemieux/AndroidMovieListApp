@@ -1,4 +1,4 @@
-package com.lemieux.data.local
+package com.lemieux.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

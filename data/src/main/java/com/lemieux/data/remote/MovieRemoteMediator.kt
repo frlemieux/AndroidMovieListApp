@@ -7,7 +7,7 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
-import com.lemieux.data.local.MovieEntity
+import com.lemieux.data.local.model.MovieEntity
 import com.lemieux.data.local.TmbdDatabase
 import com.lemieux.data.remote.model.MovieDto
 import retrofit2.HttpException
