@@ -28,8 +28,8 @@ fun Detail.toMovieDetails(): MovieDetails {
             Genre(id = genre.id, name = genre.name)
         },
         overview = this.overview,
-        budget = this.budget.toLong(),
-        revenue = this.revenue.toLong(),
+        budget = this.budget,
+        revenue = this.revenue,
         runtime = this.runtime,
         releaseDate = this.releaseDate,
         productionCompanies = this.productionCompanies.map { company ->

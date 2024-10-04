@@ -9,7 +9,7 @@ data class DetailDto(
     val backdropPath: String?,
     @SerializedName("belongs_to_collection")
     val belongsToCollection: BelongsToCollection?,
-    val budget: Int?,
+    val budget: Long?,
     val genres: List<Genre>?,
     val homepage: String?,
     val id: Int?,
@@ -31,7 +31,7 @@ data class DetailDto(
     val productionCountries: List<ProductionCountry>?,
     @SerializedName("release_date")
     val releaseDate: String?,
-    val revenue: Int?,
+    val revenue: Long?,
     val runtime: Int?,
     @SerializedName("spoken_languages")
     val spokenLanguages: List<SpokenLanguage>?,
