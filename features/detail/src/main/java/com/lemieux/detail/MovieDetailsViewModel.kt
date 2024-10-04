@@ -10,15 +10,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
 @HiltViewModel
 class MovieDetailsViewModel @Inject constructor(
@@ -32,22 +33,18 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val state : StateFlow<MovieDetailsUiState> = _id
+    val state: StateFlow<MovieDetailsUiState> = _id
         .flatMapLatest { id ->
             if (id == null) {
                 return@flatMapLatest MutableStateFlow(MovieDetailsUiState.Loading)
-            }
-            withContext(Dispatchers.Default) {
-                movieRepository.getMovieDetails(id)
-            }.map { movie ->
-                val movieDetails = movie.toMovieDetails()
-                withContext(Dispatchers.Main) {
-                    MovieDetailsUiState.Success(movieDetails)
-                }
-
-            }.catch { e ->
-                withContext(Dispatchers.Main) {
-                    MovieDetailsUiState.Error(e)
+            } else {
+                try {
+                    val movieDetail = movieRepository.getMovieDetails(id)
+                    return@flatMapLatest MutableStateFlow(
+                        MovieDetailsUiState.Success(movieDetail.toMovieDetails())
+                    )
+                } catch (e: Exception) {
+                    return@flatMapLatest MutableStateFlow(MovieDetailsUiState.Error(e))
                 }
             }
         }.stateIn(
@@ -56,7 +53,16 @@ class MovieDetailsViewModel @Inject constructor(
             initialValue = MovieDetailsUiState.Loading
         )
 
+
     fun cleanUp() {
         _id.update { null }
     }
+}
+
+suspend inline fun <T> suspendRunCatching(block: suspend () -> T): Result<T> = try {
+    Result.success(block())
+} catch (cancellationException: CancellationException) {
+    throw cancellationException
+} catch (exception: Exception) {
+    Result.failure(exception)
 }

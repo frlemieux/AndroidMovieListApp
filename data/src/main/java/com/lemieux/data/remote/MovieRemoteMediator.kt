@@ -33,14 +33,21 @@ class MovieRemoteMediator(
         val page =
             when (loadType) {
                 LoadType.REFRESH -> {
-                    STARTING_PAGE_INDEX
+                    println("LoadType.REFRESH")
+                    return MediatorResult.Success(
+                        endOfPaginationReached = false,
+                    )
                 }
 
-                LoadType.PREPEND -> return MediatorResult.Success(
-                    endOfPaginationReached = true,
-                )
+                LoadType.PREPEND -> {
+                    println("LoadType.PREPEND")
+                    return MediatorResult.Success(
+                        endOfPaginationReached = true,
+                    )
+                }
 
                 LoadType.APPEND -> {
+                    println("LoadType.APPEND")
                     val lastItem =
                         db.withTransaction {
                             db.movieDao.lastIndex() ?: STARTING_PAGE_INDEX
@@ -62,17 +69,12 @@ class MovieRemoteMediator(
             val movies = apiResponse.results
             val endOfPaginationReached = movies.isEmpty()
             db.withTransaction {
-                // clear all tables in the database
-                if (loadType == LoadType.REFRESH) {
-                    resetDb()
-                }
                 db.movieDao.insertAll(movies.map { it.toEntity() })
             }
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (exception: IOException) {
             return MediatorResult.Error(exception)
         } catch (exception: HttpException) {
-            resetDb()
             val errorBody = exception.response()?.errorBody()?.string()
             val gson = Gson()
             val errorResponse = gson.fromJson(errorBody, ErrorResponse::class.java)

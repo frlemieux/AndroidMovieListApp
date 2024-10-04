@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.AnimatedPane
@@ -29,6 +30,7 @@ class MainActivity : ComponentActivity() {
             MovieListTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val navigator = rememberListDetailPaneScaffoldNavigator<Int>()
+                    val lazyListState = rememberLazyListState()
 
                     BackHandler(navigator.canNavigateBack()) {
                         navigator.navigateBack()
@@ -39,16 +41,19 @@ class MainActivity : ComponentActivity() {
                         value = navigator.scaffoldValue,
                         listPane = {
                             AnimatedPane {
-                                MovieListScreen(onClickItem = {
-                                    navigator.navigateTo(ListDetailPaneScaffoldRole.Detail, it)
-                                })
+                                MovieListScreen(
+                                    lazyListState = lazyListState,
+                                    onClickItem = {
+                                        navigator.navigateTo(ListDetailPaneScaffoldRole.Detail, it)
+                                    })
                             }
                         },
                         detailPane = {
                             AnimatedPane {
                                 navigator.currentDestination?.content?.let {
-                                    MovieDetailsScreen(it,
-                                        )
+                                    MovieDetailsScreen(
+                                        it,
+                                    )
                                 }
                             }
                         },

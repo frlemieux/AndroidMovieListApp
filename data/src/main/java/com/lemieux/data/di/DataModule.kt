@@ -1,8 +1,14 @@
 package com.lemieux.data.di
 
 import android.content.Context
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.lemieux.data.local.TmbdDatabase
 import com.lemieux.data.remote.MovieApi
+import com.lemieux.data.remote.MovieRemoteMediator
+import com.lemieux.data.repository.MovieRepositoryImpl
+import com.lemieux.domain.repository.MovieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-@Module(includes = [RepositoryModule::class])
+@Module
 @InstallIn(SingletonComponent::class)
 object DataModule {
 
@@ -40,5 +46,16 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context): TmbdDatabase = TmbdDatabase.getInstance(context)
+    fun provideDatabase(@ApplicationContext context: Context)
+    : TmbdDatabase = TmbdDatabase.getInstance(context)
+
+    @OptIn(ExperimentalPagingApi::class)
+    @Provides
+    @Singleton
+    fun provideRepository(api: MovieApi, db: TmbdDatabase)
+    : MovieRepository = MovieRepositoryImpl(api, Pager(
+            config = PagingConfig(pageSize = 20),
+            remoteMediator = MovieRemoteMediator(api, db),
+            pagingSourceFactory = { db.movieDao.pagingSource() }
+        ))
 }

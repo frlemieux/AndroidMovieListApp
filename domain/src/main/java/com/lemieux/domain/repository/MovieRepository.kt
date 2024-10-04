@@ -8,5 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface MovieRepository {
     fun getPopularMovies(): Flow<PagingData<Movie>>
 
-    fun getMovieDetails(movieId: Int): Flow<Detail>
+    suspend fun getMovieDetails(movieId: Int): Detail
 }

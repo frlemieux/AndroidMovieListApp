@@ -1,8 +1,9 @@
 package com.lemieux.detail
 
+import androidx.compose.runtime.Stable
 import com.lemieux.domain.model.Detail
 
-
+@Stable
 data class MovieDetails(
     val title: String,
     val tagline: String,

@@ -24,26 +24,20 @@ import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
     private val api: MovieApi,
-    private val db: TmbdDatabase,
+    private val pager: Pager<Int, MovieEntity>,
 ) : MovieRepository {
 
-    @OptIn(ExperimentalPagingApi::class)
     override fun getPopularMovies(): Flow<PagingData<Movie>> {
-        return Pager(
-            config = PagingConfig(pageSize = 20),
-            remoteMediator = MovieRemoteMediator(api, db),
-            pagingSourceFactory = { db.movieDao.pagingSource() }
-        ).flow.map { pagingData ->
+        return pager.flow.map { pagingData ->
             pagingData.map { it.toMovie() }
         }.flowOn(Dispatchers.Default)
     }
 
-    override fun getMovieDetails(movieId: Int): Flow<Detail> = flow {
-        val detail = withContext(Dispatchers.IO) {
+    override suspend fun getMovieDetails(movieId: Int)
+            : Detail = withContext(Dispatchers.IO) {
             api.getMovieDetail(movieId)
-        }
-        emit(detail.toDetail())
-    }.flowOn(Dispatchers.Default)
+        }.toDetail()
+
 }
 
 
