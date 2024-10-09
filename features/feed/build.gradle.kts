@@ -65,6 +65,20 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+
+
+
+    testImplementation (libs.mockito.core)
+    testImplementation (libs.mockito.kotlin)
+
+    androidTestImplementation (libs.mockito.core)
+    androidTestImplementation (libs.mockito.kotlin)
+    androidTestImplementation (libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.mockito.android)
+
+    testImplementation (libs.kotlinx.coroutines.test)
+    testImplementation (libs.turbine)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

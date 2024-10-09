@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -6,7 +8,7 @@ plugins {
     alias(libs.plugins.hilt)
 }
 
-android {
+configure<BaseAppModuleExtension> {
     namespace = "com.lemieux.movielist"
     compileSdk = 34
 
@@ -19,9 +21,19 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        register("release") {
+            keyAlias = "keystore"
+            keyPassword = "TalarFred"
+            storeFile = file("../../../keystore.properties")
+            storePassword = "TalarFred"
+        }
+    }
     buildTypes {
         release {
-            isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

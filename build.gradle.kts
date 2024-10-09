@@ -13,3 +13,15 @@ buildscript {
         classpath(libs.secrets.gradle.plugin)
     }
 }
+
+subprojects {
+    tasks.register("unitTestAll") {
+        group = "verification"
+        description = "Runs all the unit tests in the project: :test for testInternalDebugUnitTest for android modules"
+        pluginManager.withPlugin("kotlin-android") {
+            dependsOn("testDebugUnitTest")
+        }
+    }
+}
+
+

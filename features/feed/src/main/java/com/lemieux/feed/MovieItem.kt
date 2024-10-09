@@ -1,5 +1,6 @@
 package com.lemieux.feed
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Stable
 import com.lemieux.domain.model.Movie
 

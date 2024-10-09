@@ -2,6 +2,20 @@
 
 https://www.themoviedb.org/
 
+1. The project is using this api above
+2. the app architecture is multi modules separate in data, domain, features (feed and details)
+3. I used a specific container call ListDetailPaneScaffold, it s handling the different screen size 
+4. I m using retrofit, hilt, compose, coroutine, paging3
+5. Unit and integration test, there is implementation of tests in data and feature feed module
+    - MovieItemKtTest
+    - MovieRepositoryImplTest
+    - MovieListViewModelTest
+6. One class in android test to check the RemoteMediator
+    - MovieRemoteMediatorTest
+
+The tests needs to run with --refresh-dependencies as they use dependencies from different module
+
+
 
 ## Simple list of card with paging 
 

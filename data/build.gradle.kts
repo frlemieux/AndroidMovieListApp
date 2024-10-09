@@ -58,10 +58,24 @@ dependencies {
     ksp(libs.hilt.compiler)
     ksp(libs.hilt.ext.compiler)
 
+    implementation(libs.coroutines)
+    testImplementation (libs.androidx.paging.common)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
+
+    testImplementation (libs.mockito.core)
+    testImplementation (libs.mockito.kotlin)
+
+    androidTestImplementation (libs.mockito.core)
+    androidTestImplementation (libs.mockito.kotlin)
+    androidTestImplementation (libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.mockito.android)
+
+    testImplementation (libs.kotlinx.coroutines.test)
+    testImplementation (libs.turbine)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
 }

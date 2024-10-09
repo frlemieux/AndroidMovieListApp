@@ -81,7 +81,9 @@ fun MovieDetailsScreen(
                 Text(
                     "The service is unavailable. \nRetry later please\n" +
                             " ${(state as MovieDetailsUiState.Error).exception.localizedMessage}",
-                    modifier = Modifier.align(Center).padding(16.dp),
+                    modifier = Modifier
+                        .align(Center)
+                        .padding(16.dp),
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.error
                 )
@@ -152,29 +154,31 @@ fun MovieDetailsViewCompact(
         content()
         // Title & Tagline
         Text(
-            text = movie.title,
+            text = movie.title.orEmpty(),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = movie.tagline,
+            text = movie.tagline.orEmpty(),
             fontSize = 16.sp,
             color = Color.Gray
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Genres
-        LazyRow {
-            items(movie.genres) { genre ->
-                Text(
-                    text = genre.name,
-                    modifier = Modifier
-                        .padding(end = 8.dp)
-                        .background(Color(0xFFD32F2F), RoundedCornerShape(16.dp))
-                        .padding(horizontal = 8.dp, vertical = 4.dp),
-                    color = Color.White
-                )
+        movie.genres?.let {
+            // Genres
+            LazyRow {
+                items(movie.genres) { genre ->
+                    Text(
+                        text = genre.name,
+                        modifier = Modifier
+                            .padding(end = 8.dp)
+                            .background(Color(0xFFD32F2F), RoundedCornerShape(16.dp))
+                            .padding(horizontal = 8.dp, vertical = 4.dp),
+                        color = Color.White
+                    )
+                }
             }
         }
 
@@ -187,7 +191,7 @@ fun MovieDetailsViewCompact(
             fontSize = 18.sp
         )
         Text(
-            text = movie.overview,
+            text = movie.overview.orEmpty(),
             textAlign = TextAlign.Justify
         )
 
@@ -229,7 +233,7 @@ fun MovieDetailsViewCompact(
                 modifier = Modifier.weight(1f),
             ) {
                 Text("Release Date", fontWeight = FontWeight.Bold)
-                Text(movie.releaseDate)
+                Text(movie.releaseDate.orEmpty())
             }
         }
 
@@ -242,34 +246,36 @@ fun MovieDetailsViewCompact(
             fontSize = 18.sp
         )
         Spacer(modifier = Modifier.height(8.dp))
-        LazyRow {
-            items(movie.productionCompanies) { company ->
-                Card(
-                    modifier = Modifier
-                        .weight(0.4f)
-                        .height(IntrinsicSize.Max)
-                        .padding(all = 16.dp),
-                ) {
-                    Column(
+        movie.productionCompanies?.let {
+            LazyRow {
+                items(movie.productionCompanies) { company ->
+                    Card(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
+                            .weight(0.4f)
+                            .height(IntrinsicSize.Max)
+                            .padding(all = 16.dp),
                     ) {
-                        Text(company.name, fontWeight = FontWeight.Bold)
-                        company.logoPath?.let {
-                            AsyncImage(
-                                model = "https://image.tmdb.org/t/p/w200/${it}",
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .aspectRatio(0.75f)
-                                    .height(80.dp),
-                                contentScale = ContentScale.FillWidth
-                            )
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            Text(company.name.orEmpty(), fontWeight = FontWeight.Bold)
+                            company.logoPath?.let {
+                                AsyncImage(
+                                    model = "https://image.tmdb.org/t/p/w200/${it}",
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .aspectRatio(0.75f)
+                                        .height(80.dp),
+                                    contentScale = ContentScale.FillWidth
+                                )
+                            }
                         }
-                    }
 
+                    }
                 }
             }
         }

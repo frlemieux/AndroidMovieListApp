@@ -34,9 +34,7 @@ class MovieRemoteMediator(
             when (loadType) {
                 LoadType.REFRESH -> {
                     println("LoadType.REFRESH")
-                    return MediatorResult.Success(
-                        endOfPaginationReached = false,
-                    )
+                    STARTING_PAGE_INDEX
                 }
 
                 LoadType.PREPEND -> {

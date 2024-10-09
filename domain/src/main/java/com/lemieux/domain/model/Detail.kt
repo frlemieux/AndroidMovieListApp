@@ -1,60 +1,60 @@
 package com.lemieux.domain.model
 
 data class Detail(
-    val adult: Boolean,
-    val backdropPath: String,
-    val belongsToCollection: BelongsToCollection,
-    val budget: Long,
-    val genres: List<Genre>,
-    val homepage: String,
-    val id: Int,
-    val imdbId: String,
-    val originCountry: List<String>,
-    val originalLanguage: String,
-    val originalTitle: String,
-    val overview: String,
-    val popularity: Double,
-    val posterPath: String,
-    val productionCompanies: List<ProductionCompany>,
-    val productionCountries: List<ProductionCountry>,
-    val releaseDate: String,
-    val revenue: Long,
-    val runtime: Int,
-    val spokenLanguages: List<SpokenLanguage>,
-    val status: String,
-    val tagline: String,
-    val title: String,
-    val video: Boolean,
-    val voteAverage: Double,
-    val voteCount: Int,
+    val adult: Boolean? = null,
+    val backdropPath: String? = null,
+    val belongsToCollection: BelongsToCollection? = null,
+    val budget: Long? = null,
+    val genres: List<Genre>? = null,
+    val homepage: String? = null,
+    val id: Int? = null,
+    val imdbId: String? = null,
+    val originCountry: List<String>? = null,
+    val originalLanguage: String? = null,
+    val originalTitle: String? = null,
+    val overview: String? = null,
+    val popularity: Double? = null,
+    val posterPath: String? = null,
+    val productionCompanies: List<ProductionCompany>? = null,
+    val productionCountries: List<ProductionCountry>? = null,
+    val releaseDate: String? = null,
+    val revenue: Long? = null,
+    val runtime: Int? = null,
+    val spokenLanguages: List<SpokenLanguage>? = null,
+    val status: String? = null,
+    val tagline: String? = null,
+    val title: String? = null,
+    val video: Boolean? = null,
+    val voteAverage: Double? = null,
+    val voteCount: Int? = null,
 )
 
 data class Genre(
-    val id: Int,
-    val name: String,
+    val id: Int? = null,
+    val name: String? = null,
 )
 
 data class ProductionCompany(
-    val id: Int,
-    val logoPath: String,
-    val name: String,
-    val originCountry: String,
+    val id: Int? = null,
+    val logoPath: String? = null,
+    val name: String? = null,
+    val originCountry: String? = null,
 )
 
 data class ProductionCountry(
-    val iso31661: String,
-    val name: String,
+    val iso31661: String? = null,
+    val name: String? = null,
 )
 
 data class SpokenLanguage(
-    val englishName: String,
-    val iso6391: String,
-    val name: String,
+    val englishName: String? = null,
+    val iso6391: String? = null,
+    val name: String? = null,
 )
 
 data class BelongsToCollection(
-    val backdropPath: String,
-    val id: Int,
-    val name: String,
-    val posterPath: String,
+    val backdropPath: String? = null,
+    val id: Int? = null,
+    val name: String? = null,
+    val posterPath: String? = null,
 )
